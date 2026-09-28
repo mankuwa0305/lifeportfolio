@@ -36,28 +36,30 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* Touch friendly slider customizations */
+        /* Touch friendly slider customizations - 押しやすい大きなツマミ */
         input[type=range] {
             -webkit-appearance: none;
             width: 100%;
             background: transparent;
+            touch-action: manipulation;
         }
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            height: 26px;
-            width: 26px;
+            height: 32px;
+            width: 32px;
             border-radius: 50%;
             background: #4f46e5;
             cursor: pointer;
-            margin-top: -9px;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+            margin-top: -12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border: 2px solid #ffffff;
         }
         input[type=range]::-webkit-slider-runnable-track {
             width: 100%;
-            height: 8px;
+            height: 10px;
             cursor: pointer;
             background: #cbd5e1;
-            border-radius: 4px;
+            border-radius: 5px;
         }
         body {
             overscroll-behavior-y: none;
@@ -67,22 +69,22 @@
 </head>
 <body class="bg-slate-100 text-slate-900 font-sans min-h-screen flex flex-col antialiased select-none">
 
-    <!-- Header / App Bar -->
-    <header class="bg-indigo-700 text-white sticky top-0 z-50 shadow-md">
-        <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-                <i class="fa-solid fa-compass text-amber-300 text-xl"></i>
-                <h1 class="font-bold text-lg tracking-wide">人生ポートフォリオ</h1>
+    <!-- Header / App Bar (スリム＆小さめのタイトルに変更) -->
+    <header class="bg-indigo-700 text-white sticky top-0 z-50 shadow-sm py-1.5 px-4">
+        <div class="max-w-md mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-1.5">
+                <i class="fa-solid fa-compass text-amber-300 text-sm"></i>
+                <h1 class="font-bold text-xs tracking-wide opacity-90">人生ポートフォリオ</h1>
             </div>
-            <button onclick="toggleHistoryModal()" class="text-xs bg-indigo-800 hover:bg-indigo-900 px-3 py-1.5 rounded-full flex items-center space-x-1 border border-indigo-400/50 text-white font-medium">
-                <i class="fa-solid fa-clock-rotate-left"></i>
+            <button onclick="toggleHistoryModal()" class="text-[11px] bg-indigo-800 hover:bg-indigo-900 px-2.5 py-1 rounded-full flex items-center space-x-1 border border-indigo-400/40 text-white font-medium">
+                <i class="fa-solid fa-clock-rotate-left text-[10px]"></i>
                 <span>履歴</span>
             </button>
         </div>
     </header>
 
     <!-- Main Content Container -->
-    <main class="flex-1 max-w-md w-full mx-auto p-4 pb-24">
+    <main class="flex-1 max-w-md w-full mx-auto p-4 pb-20">
 
         <!-- STEP 1: Welcome & Intro View -->
         <section id="view-intro" class="space-y-6 text-center py-4">
@@ -90,12 +92,12 @@
                 <div class="w-20 h-20 bg-indigo-100 rounded-3xl flex items-center justify-center mx-auto text-indigo-600 text-4xl shadow-inner">
                     <i class="fa-solid fa-bullseye"></i>
                 </div>
-                <h2 class="text-xl font-extrabold text-slate-900">あなたの「人生の目的」を<br>可視化しましょう</h2>
+                <h2 class="text-2xl font-extrabold text-slate-900">あなたの「人生の目的」を<br>可視化しましょう</h2>
                 <p class="text-sm text-slate-700 leading-relaxed font-medium">
-                    バイアスを防ぐため全20項目をランダムな順序で出題。「重要度」と「現在の満足度」を診断し、構成比とギャップを分析します。
+                    バイアスを防ぐため全20項目をランダムな順序で出題！「重要度」と「現在の満足度」を診断し、構成比とギャップを分析します。
                 </p>
                 <div class="pt-2">
-                    <button onclick="startDiagnosis()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 px-6 rounded-2xl shadow-lg shadow-indigo-200 active:scale-95 transition text-base flex items-center justify-center space-x-2">
+                    <button onclick="startDiagnosis()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-indigo-200 active:scale-95 transition text-lg flex items-center justify-center space-x-2">
                         <span>診断をスタートする</span>
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
@@ -103,50 +105,52 @@
             </div>
         </section>
 
-        <!-- STEP 2: Questionnaire Wizard View -->
-        <section id="view-wizard" class="hidden space-y-5">
+        <!-- STEP 2: Questionnaire Wizard View (見やすく・操作しやすく改修) -->
+        <section id="view-wizard" class="hidden space-y-4">
             <!-- Progress Bar -->
-            <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-slate-200 space-y-2">
-                <div class="flex justify-between items-center text-xs font-bold text-slate-700">
-                    <span id="wizard-category-name" class="text-indigo-700 font-extrabold">カテゴリー</span>
-                    <span id="wizard-progress-text" class="text-slate-800">1 / 20 項目</span>
+            <div class="bg-white px-4 py-3 rounded-2xl shadow-sm border border-slate-200 space-y-2">
+                <div class="flex justify-between items-center text-sm font-bold text-slate-700">
+                    <span id="wizard-category-name" class="text-indigo-700 font-extrabold text-base">カテゴリー</span>
+                    <span id="wizard-progress-text" class="text-slate-800 text-sm">1 / 20 項目</span>
                 </div>
-                <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
-                    <div id="wizard-progress-bar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" style="width: 5%"></div>
+                <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+                    <div id="wizard-progress-bar" class="bg-indigo-600 h-3 rounded-full transition-all duration-300" style="width: 5%"></div>
                 </div>
             </div>
 
             <!-- Question Card -->
-            <div id="question-card" class="bg-white rounded-3xl p-6 shadow-md border border-slate-200 space-y-5 text-center sm:text-left">
+            <div id="question-card" class="bg-white rounded-3xl p-5 shadow-md border border-slate-200 space-y-5 text-center">
                 
-                <!-- Category Badge & Illustration -->
-                <div class="flex flex-col items-center text-center space-y-3">
+                <!-- Category Badge & Title Area -->
+                <div class="flex flex-col items-center space-y-2">
                     <span id="item-category-badge" class="inline-block bg-indigo-100 text-indigo-800 text-xs font-extrabold px-3 py-1 rounded-full border border-indigo-200">
                         カテゴリー名
                     </span>
                     
-                    <!-- Visual Illustration Icon Circle -->
-                    <div id="item-icon-container" class="w-20 h-20 rounded-3xl flex items-center justify-center text-3xl shadow-xs my-1 border">
+                    <!-- Visual Illustration Icon -->
+                    <div id="item-icon-container" class="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl shadow-xs my-1 border">
                         <i id="item-icon" class="fa-solid fa-heart"></i>
                     </div>
 
-                    <div>
-                        <h3 id="item-title" class="text-xl font-extrabold text-slate-900">項目タイトル</h3>
-                        <p id="item-desc" class="text-xs text-slate-700 mt-1 font-semibold leading-relaxed">項目の補足説明</p>
+                    <div class="space-y-1">
+                        <!-- タイトルを大きくして視認性をアップ -->
+                        <h3 id="item-title" class="text-2xl font-black text-slate-900 tracking-tight">項目タイトル</h3>
+                        <!-- 説明文も見やすく調整 -->
+                        <p id="item-desc" class="text-sm text-slate-600 font-bold leading-snug px-2">項目の補足説明</p>
                     </div>
                 </div>
 
                 <!-- Slider 1: Importance -->
-                <div class="space-y-2 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                <div class="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left">
                     <div class="flex justify-between items-center">
-                        <label class="text-xs font-extrabold text-slate-900 flex items-center space-x-1.5">
-                            <i class="fa-solid fa-star text-amber-500 text-sm"></i>
+                        <label class="text-sm font-extrabold text-slate-900 flex items-center space-x-1.5">
+                            <i class="fa-solid fa-star text-amber-500 text-base"></i>
                             <span>重要度（どれくらい重視するか）</span>
                         </label>
-                        <span id="val-importance" class="text-lg font-black text-indigo-700 bg-white px-3 py-0.5 rounded-lg border border-slate-300 shadow-xs">5</span>
+                        <span id="val-importance" class="text-xl font-black text-indigo-700 bg-white px-3.5 py-1 rounded-xl border border-slate-300 shadow-xs">5</span>
                     </div>
                     <input type="range" id="input-importance" min="1" max="10" value="5" step="1" oninput="updateSliderVal('importance')">
-                    <div class="flex justify-between text-[11px] text-slate-700 font-bold">
+                    <div class="flex justify-between text-xs text-slate-600 font-bold px-1">
                         <span>1: 低い</span>
                         <span>5: 普通</span>
                         <span>10: 非常に高い</span>
@@ -154,16 +158,16 @@
                 </div>
 
                 <!-- Slider 2: Satisfaction -->
-                <div class="space-y-2 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                <div class="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left">
                     <div class="flex justify-between items-center">
-                        <label class="text-xs font-extrabold text-slate-900 flex items-center space-x-1.5">
-                            <i class="fa-solid fa-face-smile text-emerald-600 text-sm"></i>
-                            <span>現在の満足度（どれくらい満たされているか）</span>
+                        <label class="text-sm font-extrabold text-slate-900 flex items-center space-x-1.5">
+                            <i class="fa-solid fa-face-smile text-emerald-600 text-base"></i>
+                            <span>現在の満足度（満たされているか）</span>
                         </label>
-                        <span id="val-satisfaction" class="text-lg font-black text-emerald-700 bg-white px-3 py-0.5 rounded-lg border border-slate-300 shadow-xs">5</span>
+                        <span id="val-satisfaction" class="text-xl font-black text-emerald-700 bg-white px-3.5 py-1 rounded-xl border border-slate-300 shadow-xs">5</span>
                     </div>
                     <input type="range" id="input-satisfaction" min="1" max="10" value="5" step="1" oninput="updateSliderVal('satisfaction')">
-                    <div class="flex justify-between text-[11px] text-slate-700 font-bold">
+                    <div class="flex justify-between text-xs text-slate-600 font-bold px-1">
                         <span>1: 不満</span>
                         <span>5: 普通</span>
                         <span>10: 大満足</span>
@@ -171,15 +175,15 @@
                 </div>
             </div>
 
-            <!-- Controls -->
-            <div class="flex items-center justify-between gap-3 pt-2">
-                <button id="btn-prev" onclick="prevQuestion()" class="flex-1 bg-white hover:bg-slate-100 border border-slate-300 text-slate-800 font-extrabold py-3.5 px-4 rounded-2xl text-sm transition flex items-center justify-center space-x-1 shadow-xs">
-                    <i class="fa-solid fa-chevron-left text-xs"></i>
+            <!-- Controls (大きな押しやすいボタンに変更) -->
+            <div class="flex items-center justify-between gap-3 pt-1">
+                <button id="btn-prev" onclick="prevQuestion()" class="flex-1 bg-white hover:bg-slate-100 border-2 border-slate-300 text-slate-800 font-extrabold py-4 px-4 rounded-2xl text-base transition flex items-center justify-center space-x-1 shadow-sm active:scale-95">
+                    <i class="fa-solid fa-chevron-left text-sm"></i>
                     <span>前へ</span>
                 </button>
-                <button id="btn-next" onclick="nextQuestion()" class="flex-2 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold py-3.5 px-6 rounded-2xl text-sm shadow-md shadow-indigo-200 transition flex items-center justify-center space-x-1">
+                <button id="btn-next" onclick="nextQuestion()" class="flex-2 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold py-4 px-6 rounded-2xl text-lg shadow-md shadow-indigo-200 transition flex items-center justify-center space-x-2 active:scale-95">
                     <span id="btn-next-text">次へ進む</span>
-                    <i class="fa-solid fa-chevron-right text-xs"></i>
+                    <i class="fa-solid fa-chevron-right text-sm"></i>
                 </button>
             </div>
         </section>
@@ -201,7 +205,7 @@
 
             <!-- Ranking Table: Share & Average Importance -->
             <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200 space-y-4">
-                <h3 class="font-extrabold text-sm text-slate-900 flex items-center space-x-2">
+                <h3 class="font-extrabold text-base text-slate-900 flex items-center space-x-2">
                     <i class="fa-solid fa-list-ol text-indigo-600"></i>
                     <span>人生目的のシェア（重要度順位）</span>
                 </h3>
@@ -213,9 +217,9 @@
 
                 <!-- Ranking Table -->
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
+                    <table class="w-full text-left text-sm">
                         <thead>
-                            <tr class="border-b-2 border-slate-200 text-slate-700 font-extrabold">
+                            <tr class="border-b-2 border-slate-200 text-slate-700 font-extrabold text-xs">
                                 <th class="py-2.5 px-1 text-center">順位</th>
                                 <th class="py-2.5 px-2">カテゴリー</th>
                                 <th class="py-2.5 px-1 text-right">平均重要度</th>
@@ -231,7 +235,7 @@
 
             <!-- Radar Chart: Importance vs Satisfaction -->
             <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 space-y-3">
-                <h3 class="font-bold text-sm text-slate-800 flex items-center space-x-2">
+                <h3 class="font-bold text-base text-slate-800 flex items-center space-x-2">
                     <i class="fa-solid fa-chart-radar text-indigo-500"></i>
                     <span>重要度 vs 満足度バランス</span>
                 </h3>
@@ -243,11 +247,11 @@
             <!-- Priority Top 3 Gaps -->
             <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 space-y-4">
                 <div>
-                    <h3 class="font-bold text-sm text-slate-800 flex items-center space-x-2">
+                    <h3 class="font-bold text-base text-slate-800 flex items-center space-x-2">
                         <i class="fa-solid fa-triangle-exclamation text-rose-500"></i>
                         <span>最優先で対処すべき領域 TOP 3</span>
                     </h3>
-                    <p class="text-xs text-slate-400 mt-1">「重要度が高く満足度が低い」ギャップの大きい具体項目です。</p>
+                    <p class="text-xs text-slate-500 mt-1 font-medium">「重要度が高く満足度が低い」ギャップの大きい具体項目です。</p>
                 </div>
 
                 <div id="gap-items-container" class="space-y-3">
@@ -257,12 +261,12 @@
 
             <!-- Action Plan Input -->
             <div class="bg-indigo-50 border border-indigo-100 p-5 rounded-3xl space-y-3">
-                <h3 class="font-bold text-sm text-indigo-900 flex items-center space-x-2">
+                <h3 class="font-bold text-base text-indigo-900 flex items-center space-x-2">
                     <i class="fa-solid fa-pen-to-square text-indigo-600"></i>
                     <span>今後のアクションメモ</span>
                 </h3>
-                <textarea id="action-plan-memo" rows="3" class="w-full text-xs p-3 rounded-2xl border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white" placeholder="例: 今週末に今後のキャリアについて整理する時間を作る..."></textarea>
-                <button onclick="saveCurrentResult()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-2xl text-xs shadow-md shadow-indigo-200 transition flex items-center justify-center space-x-2">
+                <textarea id="action-plan-memo" rows="3" class="w-full text-sm p-3 rounded-2xl border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white" placeholder="例: 今週末に今後のキャリアについて整理する時間を作る..."></textarea>
+                <button onclick="saveCurrentResult()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-2xl text-sm shadow-md shadow-indigo-200 transition flex items-center justify-center space-x-2 active:scale-95">
                     <i class="fa-solid fa-floppy-disk"></i>
                     <span>診断結果とメモを保存する</span>
                 </button>
@@ -270,7 +274,7 @@
 
             <!-- Restart Button -->
             <div class="pt-2">
-                <button onclick="restartDiagnosis()" class="w-full bg-white hover:bg-slate-50 text-slate-600 font-bold py-3 border border-slate-200 rounded-2xl text-xs transition">
+                <button onclick="restartDiagnosis()" class="w-full bg-white hover:bg-slate-50 text-slate-600 font-bold py-3.5 border border-slate-200 rounded-2xl text-sm transition">
                     再診断を行う
                 </button>
             </div>
@@ -282,12 +286,12 @@
     <div id="modal-history" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
         <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-3xl p-5 space-y-4 max-h-[80vh] flex flex-col shadow-2xl">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="font-bold text-sm text-slate-800 flex items-center space-x-2">
+                <h3 class="font-bold text-base text-slate-800 flex items-center space-x-2">
                     <i class="fa-solid fa-clock-rotate-left text-indigo-600"></i>
                     <span>診断履歴一覧</span>
                 </h3>
                 <button onclick="toggleHistoryModal()" class="text-slate-400 hover:text-slate-600 p-1">
-                    <i class="fa-solid fa-xmark text-lg"></i>
+                    <i class="fa-solid fa-xmark text-xl"></i>
                 </button>
             </div>
             
@@ -380,7 +384,7 @@
         };
 
         let currentIndex = 0;
-        let shuffledItems = []; // Shuffled array for bias-free diagnosis
+        let shuffledItems = [];
         let userScores = {};
         let radarChartInstance = null;
         let doughnutChartInstance = null;
@@ -405,7 +409,6 @@
         }
 
         function startDiagnosis() {
-            // Shuffle items to remove category anchoring bias
             shuffledItems = shuffleArray(DIAGNOSIS_ITEMS);
 
             document.getElementById('view-intro').classList.add('hidden');
@@ -427,11 +430,10 @@
             document.getElementById('item-title').textContent = item.title;
             document.getElementById('item-desc').textContent = item.desc;
 
-            // Update Icon Container
             const iconContainer = document.getElementById('item-icon-container');
             const iconElem = document.getElementById('item-icon');
             
-            iconContainer.className = `w-20 h-20 rounded-3xl flex items-center justify-center text-3xl shadow-xs my-1 border ${item.iconBg} ${item.borderColor}`;
+            iconContainer.className = `w-16 h-16 rounded-2xl flex items-center justify-center text-2xl shadow-xs my-1 border ${item.iconBg} ${item.borderColor}`;
             iconElem.className = `fa-solid ${item.icon} ${item.iconColor}`;
 
             const currentScore = userScores[item.id] || { importance: 5, satisfaction: 5 };
@@ -481,7 +483,6 @@
                 categoryStats[cat] = { totalImp: 0, totalSat: 0, count: 0 };
             });
 
-            // Aggregate by Category
             DIAGNOSIS_ITEMS.forEach(item => {
                 const s = userScores[item.id];
                 if (categoryStats[item.category]) {
@@ -491,7 +492,6 @@
                 }
             });
 
-            // Calculate Sum of Category Average Importances
             let sumAvgImp = 0;
             const categoryAvgs = {};
 
@@ -503,7 +503,6 @@
                 sumAvgImp += avgImp;
             });
 
-            // Build List & Calculate Share based on Category Average Importance
             const categoryList = categories.map(cat => {
                 const { avgImp, avgSat } = categoryAvgs[cat];
                 const sharePercent = sumAvgImp > 0 ? (avgImp / sumAvgImp) * 100 : 0;
@@ -517,10 +516,8 @@
                 };
             });
 
-            // SORT DESCENDING BY avgImportance
             categoryList.sort((a, b) => b.avgImportance - a.avgImportance);
 
-            // Item-Level Gap Analysis TOP 3
             const itemGaps = DIAGNOSIS_ITEMS.map(item => {
                 const s = userScores[item.id];
                 return {
@@ -544,7 +541,7 @@
             const results = calculateResults();
             const sortedCats = results.sortedCategories;
 
-            // 1. Render Top Type Comment Card
+            // Top Type Comment
             const topCategory = sortedCats[0];
             const typeInfo = TYPE_DESCRIPTIONS[topCategory.name] || {};
 
@@ -568,7 +565,7 @@
                 </div>
             `;
 
-            // 2. Render Ranking Table
+            // Ranking Table
             const tbody = document.getElementById('ranking-table-body');
             tbody.innerHTML = '';
 
@@ -584,7 +581,7 @@
                 tbody.appendChild(tr);
             });
 
-            // 3. Render Top 3 Gaps
+            // Top 3 Gaps
             const gapContainer = document.getElementById('gap-items-container');
             gapContainer.innerHTML = '';
 
@@ -595,13 +592,13 @@
                     <div class="flex justify-between items-start">
                         <div>
                             <span class="text-[10px] font-bold text-slate-500 bg-slate-200/60 px-2 py-0.5 rounded-md">${item.category}</span>
-                            <h4 class="font-bold text-xs text-slate-800 mt-1">${item.title}</h4>
+                            <h4 class="font-bold text-sm text-slate-800 mt-1">${item.title}</h4>
                         </div>
                         <span class="text-xs font-bold text-rose-500 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-lg">
                             ギャップ +${item.gap}
                         </span>
                     </div>
-                    <div class="flex items-center space-x-4 text-[11px] text-slate-500 pt-1 border-t border-slate-200/60">
+                    <div class="flex items-center space-x-4 text-xs text-slate-600 pt-1 border-t border-slate-200/60 font-medium">
                         <span>重要度: <strong class="text-indigo-600">${item.importance}</strong></span>
                         <span>満足度: <strong class="text-emerald-600">${item.satisfaction}</strong></span>
                     </div>
@@ -609,7 +606,6 @@
                 gapContainer.appendChild(card);
             });
 
-            // 4. Render Charts
             renderCharts(sortedCats);
         }
 
@@ -678,11 +674,11 @@
                             min: 0,
                             max: 10,
                             ticks: { stepSize: 2, display: false },
-                            pointLabels: { font: { size: 9, weight: 'bold' } }
+                            pointLabels: { font: { size: 10, weight: 'bold' } }
                         }
                     },
                     plugins: {
-                        legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } }
+                        legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11 } } }
                     }
                 }
             });
