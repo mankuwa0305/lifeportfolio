@@ -1,4 +1,3 @@
-[人生目的ポートフォリオ診断index.html](https://github.com/user-attachments/files/32741222/index.html)
 <!DOCTYPE html>
 <html lang="ja">
 <head>
