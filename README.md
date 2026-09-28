@@ -61,18 +61,24 @@
             background: #cbd5e1;
             border-radius: 5px;
         }
+        *, ::before, ::after {
+            box-sizing: border-box;
+        }
         html, body {
             overflow-x: hidden;
             overscroll-behavior-y: none;
             -webkit-tap-highlight-color: transparent;
+            width: 100%;
+            margin: 0;
+            padding: 0;
         }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-900 font-sans min-h-screen flex flex-col items-center antialiased select-none overflow-x-hidden">
+<body class="bg-slate-100 text-slate-900 font-sans min-h-screen flex flex-col antialiased select-none overflow-x-hidden w-full">
 
-    <!-- Header / App Bar (結果画面ではJSにより非表示になります) -->
-    <header id="app-header" class="bg-indigo-700 text-white sticky top-0 z-50 shadow-sm py-1.5 px-4 w-full">
-        <div class="max-w-md mx-auto flex items-center justify-between">
+    <!-- Header / App Bar -->
+    <header id="app-header" class="bg-indigo-700 text-white sticky top-0 z-50 shadow-sm py-2 px-4 w-full">
+        <div class="w-full flex items-center justify-between">
             <div class="flex items-center space-x-1.5">
                 <i class="fa-solid fa-compass text-amber-300 text-sm"></i>
                 <h1 class="font-bold text-xs tracking-wide opacity-90">人生ポートフォリオ</h1>
@@ -84,12 +90,12 @@
         </div>
     </header>
 
-    <!-- Main Content Container (中央揃えレイアウト) -->
-    <main class="flex-1 max-w-md w-full mx-auto p-4 pb-20 box-border overflow-x-hidden flex flex-col items-center justify-start">
+    <!-- Main Content Container (横幅一杯レイアウト) -->
+    <main class="flex-1 w-full p-4 pb-20 box-border overflow-x-hidden">
 
         <!-- STEP 1: Welcome & Intro View -->
-        <section id="view-intro" class="space-y-6 text-center py-4 w-full max-w-md mx-auto">
-            <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-200 space-y-4">
+        <section id="view-intro" class="space-y-6 text-center py-4 w-full">
+            <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-200 space-y-4 w-full">
                 <div class="w-20 h-20 bg-indigo-100 rounded-3xl flex items-center justify-center mx-auto text-indigo-600 text-4xl shadow-inner">
                     <i class="fa-solid fa-bullseye"></i>
                 </div>
@@ -107,9 +113,9 @@
         </section>
 
         <!-- STEP 2: Questionnaire Wizard View -->
-        <section id="view-wizard" class="hidden space-y-4 w-full max-w-md mx-auto">
+        <section id="view-wizard" class="hidden space-y-4 w-full">
             <!-- Progress Bar -->
-            <div class="bg-white px-4 py-3 rounded-2xl shadow-sm border border-slate-200 space-y-2">
+            <div class="bg-white px-4 py-3 rounded-2xl shadow-sm border border-slate-200 space-y-2 w-full">
                 <div class="flex justify-between items-center text-sm font-bold text-slate-700">
                     <span id="wizard-category-name" class="text-indigo-700 font-extrabold text-base">カテゴリー</span>
                     <span id="wizard-progress-text" class="text-slate-800 text-sm">1 / 20 項目</span>
@@ -120,7 +126,7 @@
             </div>
 
             <!-- Question Card -->
-            <div id="question-card" class="bg-white rounded-3xl p-5 shadow-md border border-slate-200 space-y-5 text-center">
+            <div id="question-card" class="bg-white rounded-3xl p-5 shadow-md border border-slate-200 space-y-5 text-center w-full">
                 
                 <!-- Category Badge & Title Area -->
                 <div class="flex flex-col items-center space-y-2">
@@ -140,7 +146,7 @@
                 </div>
 
                 <!-- Slider 1: Importance -->
-                <div class="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left">
+                <div class="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left w-full">
                     <div class="flex justify-between items-center">
                         <label class="text-sm font-extrabold text-slate-900 flex items-center space-x-1.5">
                             <i class="fa-solid fa-star text-amber-500 text-base"></i>
@@ -157,7 +163,7 @@
                 </div>
 
                 <!-- Slider 2: Satisfaction -->
-                <div class="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left">
+                <div class="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left w-full">
                     <div class="flex justify-between items-center">
                         <label class="text-sm font-extrabold text-slate-900 flex items-center space-x-1.5">
                             <i class="fa-solid fa-face-smile text-emerald-600 text-base"></i>
@@ -175,7 +181,7 @@
             </div>
 
             <!-- Controls -->
-            <div class="flex items-center justify-between gap-3 pt-1">
+            <div class="flex items-center justify-between gap-3 pt-1 w-full">
                 <button id="btn-prev" onclick="prevQuestion()" class="flex-1 bg-white hover:bg-slate-100 border-2 border-slate-300 text-slate-800 font-extrabold py-4 px-4 rounded-2xl text-base transition flex items-center justify-center space-x-1 shadow-sm active:scale-95">
                     <i class="fa-solid fa-chevron-left text-sm"></i>
                     <span>前へ</span>
@@ -187,11 +193,11 @@
             </div>
         </section>
 
-        <!-- STEP 3: Results View (画面全体で中央揃えを行うようFlex指定) -->
-        <section id="view-result" class="hidden space-y-6 w-full max-w-md mx-auto box-border overflow-x-hidden">
+        <!-- STEP 3: Results View (画面幅いっぱいのフルサイズレイアウト) -->
+        <section id="view-result" class="hidden space-y-5 w-full box-border">
             
             <!-- Result Title Header & Top Action Bar -->
-            <div class="bg-gradient-to-r from-indigo-700 to-indigo-900 text-white p-5 rounded-3xl shadow-lg space-y-2 relative w-full max-w-md mx-auto box-border">
+            <div class="bg-gradient-to-r from-indigo-700 to-indigo-900 text-white p-5 rounded-3xl shadow-lg space-y-2 relative w-full box-border">
                 <div class="flex justify-between items-start">
                     <div>
                         <div class="text-[11px] opacity-90 uppercase tracking-widest font-extrabold">Diagnosis Result</div>
@@ -207,12 +213,12 @@
             </div>
 
             <!-- TOP TYPE COMMENT SECTION -->
-            <div id="top-type-card" class="bg-amber-50 border-2 border-amber-300 p-5 rounded-3xl space-y-3 shadow-sm w-full max-w-md mx-auto box-border">
+            <div id="top-type-card" class="bg-amber-50 border-2 border-amber-300 p-5 rounded-3xl space-y-3 shadow-sm w-full box-border">
                 <!-- JS Dynamic Inject -->
             </div>
 
             <!-- Ranking Table: Share & Average Importance -->
-            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200 space-y-4 w-full max-w-md mx-auto box-border overflow-hidden">
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200 space-y-4 w-full box-border">
                 <h3 class="font-extrabold text-base text-slate-900 flex items-center space-x-2">
                     <i class="fa-solid fa-list-ol text-indigo-600"></i>
                     <span>人生目的のシェア（重要度順位）</span>
@@ -225,7 +231,7 @@
 
                 <!-- Ranking Table -->
                 <div class="w-full overflow-x-auto">
-                    <table class="w-full text-left text-sm mx-auto">
+                    <table class="w-full text-left text-sm">
                         <thead>
                             <tr class="border-b-2 border-slate-200 text-slate-700 font-extrabold text-xs">
                                 <th class="py-2.5 px-1 text-center whitespace-nowrap">順位</th>
@@ -242,18 +248,18 @@
             </div>
 
             <!-- Radar Chart: Importance vs Satisfaction -->
-            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 space-y-3 w-full max-w-md mx-auto box-border">
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200 space-y-3 w-full box-border">
                 <h3 class="font-bold text-base text-slate-800 flex items-center space-x-2">
                     <i class="fa-solid fa-chart-radar text-indigo-500"></i>
                     <span>重要度 vs 満足度バランス</span>
                 </h3>
-                <div class="relative aspect-square w-full max-w-xs mx-auto">
+                <div class="relative w-full max-w-sm mx-auto p-2">
                     <canvas id="radarChart"></canvas>
                 </div>
             </div>
 
             <!-- Priority Top 3 Gaps -->
-            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 space-y-4 w-full max-w-md mx-auto box-border">
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200 space-y-4 w-full box-border">
                 <div>
                     <h3 class="font-bold text-base text-slate-800 flex items-center space-x-2">
                         <i class="fa-solid fa-triangle-exclamation text-rose-500"></i>
@@ -268,7 +274,7 @@
             </div>
 
             <!-- Action Plan Input -->
-            <div class="bg-indigo-50 border border-indigo-100 p-5 rounded-3xl space-y-3 w-full max-w-md mx-auto box-border">
+            <div class="bg-indigo-50 border border-indigo-100 p-5 rounded-3xl space-y-3 w-full box-border">
                 <h3 class="font-bold text-base text-indigo-900 flex items-center space-x-2">
                     <i class="fa-solid fa-pen-to-square text-indigo-600"></i>
                     <span>今後のアクションメモ</span>
@@ -281,7 +287,7 @@
             </div>
 
             <!-- Restart Button -->
-            <div class="pt-2 w-full max-w-md mx-auto">
+            <div class="pt-2 w-full">
                 <button onclick="restartDiagnosis()" class="w-full bg-white hover:bg-slate-50 text-slate-600 font-bold py-3.5 border border-slate-200 rounded-2xl text-sm transition">
                     再診断を行う
                 </button>
@@ -424,11 +430,9 @@
             
             const wizardView = document.getElementById('view-wizard');
             wizardView.classList.remove('hidden');
-            wizardView.classList.add('flex', 'flex-col', 'items-center');
 
             const resultView = document.getElementById('view-result');
             resultView.classList.add('hidden');
-            resultView.classList.remove('flex', 'flex-col', 'items-center');
 
             currentIndex = 0;
             renderQuestion();
@@ -551,16 +555,11 @@
         }
 
         function showResults() {
-            // 結果画面遷移時にヘッダーを隠し、中央寄せFlexレイアウトを確実に適用
             document.getElementById('app-header').classList.add('hidden');
-            
-            const wizardView = document.getElementById('view-wizard');
-            wizardView.classList.add('hidden');
-            wizardView.classList.remove('flex', 'flex-col', 'items-center');
+            document.getElementById('view-wizard').classList.add('hidden');
 
             const resultView = document.getElementById('view-result');
             resultView.classList.remove('hidden');
-            resultView.classList.add('flex', 'flex-col', 'items-center');
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -694,7 +693,8 @@
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false,
+                    maintainAspectRatio: true,
+                    aspectRatio: 1.1,
                     scales: {
                         r: {
                             min: 0,
