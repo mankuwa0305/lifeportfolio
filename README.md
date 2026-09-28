@@ -68,7 +68,7 @@
         }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-900 font-sans min-h-screen flex flex-col antialiased select-none overflow-x-hidden">
+<body class="bg-slate-100 text-slate-900 font-sans min-h-screen flex flex-col items-center antialiased select-none overflow-x-hidden">
 
     <!-- Header / App Bar (結果画面ではJSにより非表示になります) -->
     <header id="app-header" class="bg-indigo-700 text-white sticky top-0 z-50 shadow-sm py-1.5 px-4 w-full">
@@ -84,8 +84,8 @@
         </div>
     </header>
 
-    <!-- Main Content Container (右ズレ防止のため box-border と px-4 を最適化) -->
-    <main class="flex-1 max-w-md w-full mx-auto p-4 pb-20 box-border overflow-x-hidden">
+    <!-- Main Content Container (中央揃えレイアウト) -->
+    <main class="flex-1 max-w-md w-full mx-auto p-4 pb-20 box-border overflow-x-hidden flex flex-col items-center justify-start">
 
         <!-- STEP 1: Welcome & Intro View -->
         <section id="view-intro" class="space-y-6 text-center py-4 w-full">
@@ -187,17 +187,17 @@
             </div>
         </section>
 
-        <!-- STEP 3: Results View (ヘッダーなしでも履歴を確認できるよう内部にボタン配置) -->
-        <section id="view-result" class="hidden space-y-6 w-full box-border overflow-x-hidden">
+        <!-- STEP 3: Results View (完全中央揃え配置) -->
+        <section id="view-result" class="hidden space-y-6 w-full max-w-md mx-auto box-border overflow-x-hidden text-left">
             
             <!-- Result Title Header & Top Action Bar -->
-            <div class="bg-gradient-to-r from-indigo-700 to-indigo-900 text-white p-5 rounded-3xl shadow-lg space-y-2 relative">
+            <div class="bg-gradient-to-r from-indigo-700 to-indigo-900 text-white p-5 rounded-3xl shadow-lg space-y-2 relative w-full box-border">
                 <div class="flex justify-between items-start">
                     <div>
                         <div class="text-[11px] opacity-90 uppercase tracking-widest font-extrabold">Diagnosis Result</div>
                         <h2 class="text-xl font-black mt-0.5">人生目的ポートフォリオ分析</h2>
                     </div>
-                    <!-- 履歴ボタンを結果画面内にも設置 -->
+                    <!-- 履歴ボタン -->
                     <button onclick="toggleHistoryModal()" class="text-[11px] bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-full flex items-center space-x-1.5 border border-white/30 text-white font-bold backdrop-blur-xs">
                         <i class="fa-solid fa-clock-rotate-left text-[10px]"></i>
                         <span>履歴</span>
@@ -224,8 +224,8 @@
                 </div>
 
                 <!-- Ranking Table -->
-                <div class="w-full overflow-x-auto">
-                    <table class="w-full text-left text-sm">
+                <div class="w-full">
+                    <table class="w-full text-left text-sm mx-auto">
                         <thead>
                             <tr class="border-b-2 border-slate-200 text-slate-700 font-extrabold text-xs">
                                 <th class="py-2.5 px-1 text-center whitespace-nowrap">順位</th>
@@ -335,7 +335,7 @@
             { id: 16, category: "趣味・レジャー", title: "自己啓発・学び", desc: "新しいスキルの習得や興味のある分野の勉強", icon: "fa-graduation-cap", iconBg: "bg-blue-100", iconColor: "text-blue-700", borderColor: "border-blue-200" },
             { id: 17, category: "趣味・レジャー", title: "趣味・創作活動", desc: "夢中になれるスポーツ・芸術・クラフトなど", icon: "fa-palette", iconBg: "bg-fuchsia-100", iconColor: "text-fuchsia-600", borderColor: "border-fuchsia-200" },
             { id: 18, category: "趣味・レジャー", title: "旅行・非日常体験", desc: "新しい場所や文化に触れる探訪体験", icon: "fa-plane-departure", iconBg: "bg-sky-100", iconColor: "text-sky-600", borderColor: "border-sky-200" },
-            { id: 19, category: "趣味・レジャー", title: "余暇・リフレッシュ", desc: "心身をリラックスさせ自由を満を満喫する時間", icon: "fa-mug-hot", iconBg: "bg-amber-100", iconColor: "text-amber-700", borderColor: "border-amber-200" },
+            { id: 19, category: "趣味・レジャー", title: "余暇・リフレッシュ", desc: "心身をリラックスさせ自由を満たす時間", icon: "fa-mug-hot", iconBg: "bg-amber-100", iconColor: "text-amber-700", borderColor: "border-amber-200" },
             { id: 20, category: "趣味・レジャー", title: "美意識・自分磨き", desc: "ファッション、美容、感性を磨く時間", icon: "fa-wand-magic-sparkles", iconBg: "bg-pink-100", iconColor: "text-pink-600", borderColor: "border-pink-200" }
         ];
 
