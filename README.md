@@ -62,22 +62,22 @@
             border-radius: 5px;
         }
         *, ::before, ::after {
-            box-sizing: border-box;
+            box-sizing: border-box !important;
         }
         html, body {
             overflow-x: hidden;
             overscroll-behavior-y: none;
             -webkit-tap-highlight-color: transparent;
-            width: 100%;
+            width: 100vw;
             margin: 0;
             padding: 0;
         }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-900 font-sans min-h-screen flex flex-col antialiased select-none overflow-x-hidden w-full">
+<body class="bg-slate-100 text-slate-900 font-sans min-h-screen antialiased select-none overflow-x-hidden w-full">
 
     <!-- Header / App Bar -->
-    <header id="app-header" class="bg-indigo-700 text-white sticky top-0 z-50 shadow-sm py-2 px-4 w-full">
+    <header id="app-header" class="bg-indigo-700 text-white sticky top-0 z-50 shadow-sm py-3 px-4 w-full">
         <div class="w-full flex items-center justify-between">
             <div class="flex items-center space-x-1.5">
                 <i class="fa-solid fa-compass text-amber-300 text-sm"></i>
@@ -90,8 +90,8 @@
         </div>
     </header>
 
-    <!-- Main Content Container (横幅一杯レイアウト) -->
-    <main class="flex-1 w-full p-4 pb-20 box-border overflow-x-hidden">
+    <!-- Main Content Container (横幅100%完全拡張レイアウト) -->
+    <main class="w-full p-3 pb-20 block">
 
         <!-- STEP 1: Welcome & Intro View -->
         <section id="view-intro" class="space-y-6 text-center py-4 w-full">
@@ -193,17 +193,16 @@
             </div>
         </section>
 
-        <!-- STEP 3: Results View (画面幅いっぱいのフルサイズレイアウト) -->
-        <section id="view-result" class="hidden space-y-5 w-full box-border">
+        <!-- STEP 3: Results View (完全全幅表示) -->
+        <section id="view-result" class="hidden space-y-4 w-full">
             
             <!-- Result Title Header & Top Action Bar -->
-            <div class="bg-gradient-to-r from-indigo-700 to-indigo-900 text-white p-5 rounded-3xl shadow-lg space-y-2 relative w-full box-border">
+            <div class="bg-gradient-to-r from-indigo-700 to-indigo-900 text-white p-5 rounded-3xl shadow-md space-y-2 w-full">
                 <div class="flex justify-between items-start">
                     <div>
                         <div class="text-[11px] opacity-90 uppercase tracking-widest font-extrabold">Diagnosis Result</div>
                         <h2 class="text-xl font-black mt-0.5">人生目的ポートフォリオ分析</h2>
                     </div>
-                    <!-- 履歴ボタン -->
                     <button onclick="toggleHistoryModal()" class="text-[11px] bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-full flex items-center space-x-1.5 border border-white/30 text-white font-bold backdrop-blur-xs">
                         <i class="fa-solid fa-clock-rotate-left text-[10px]"></i>
                         <span>履歴</span>
@@ -213,12 +212,12 @@
             </div>
 
             <!-- TOP TYPE COMMENT SECTION -->
-            <div id="top-type-card" class="bg-amber-50 border-2 border-amber-300 p-5 rounded-3xl space-y-3 shadow-sm w-full box-border">
+            <div id="top-type-card" class="bg-amber-50 border-2 border-amber-300 p-5 rounded-3xl space-y-3 shadow-xs w-full">
                 <!-- JS Dynamic Inject -->
             </div>
 
             <!-- Ranking Table: Share & Average Importance -->
-            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200 space-y-4 w-full box-border">
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200 space-y-4 w-full">
                 <h3 class="font-extrabold text-base text-slate-900 flex items-center space-x-2">
                     <i class="fa-solid fa-list-ol text-indigo-600"></i>
                     <span>人生目的のシェア（重要度順位）</span>
@@ -234,10 +233,10 @@
                     <table class="w-full text-left text-sm">
                         <thead>
                             <tr class="border-b-2 border-slate-200 text-slate-700 font-extrabold text-xs">
-                                <th class="py-2.5 px-1 text-center whitespace-nowrap">順位</th>
-                                <th class="py-2.5 px-2 whitespace-nowrap">カテゴリー</th>
-                                <th class="py-2.5 px-1 text-right whitespace-nowrap">平均重要度</th>
-                                <th class="py-2.5 px-1 text-right whitespace-nowrap">シェア</th>
+                                <th class="py-2.5 px-2 text-center">順位</th>
+                                <th class="py-2.5 px-2">カテゴリー</th>
+                                <th class="py-2.5 px-2 text-right">平均重要度</th>
+                                <th class="py-2.5 px-2 text-right">シェア</th>
                             </tr>
                         </thead>
                         <tbody id="ranking-table-body" class="divide-y divide-slate-200">
@@ -248,7 +247,7 @@
             </div>
 
             <!-- Radar Chart: Importance vs Satisfaction -->
-            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200 space-y-3 w-full box-border">
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200 space-y-3 w-full">
                 <h3 class="font-bold text-base text-slate-800 flex items-center space-x-2">
                     <i class="fa-solid fa-chart-radar text-indigo-500"></i>
                     <span>重要度 vs 満足度バランス</span>
@@ -259,7 +258,7 @@
             </div>
 
             <!-- Priority Top 3 Gaps -->
-            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200 space-y-4 w-full box-border">
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200 space-y-4 w-full">
                 <div>
                     <h3 class="font-bold text-base text-slate-800 flex items-center space-x-2">
                         <i class="fa-solid fa-triangle-exclamation text-rose-500"></i>
@@ -274,12 +273,12 @@
             </div>
 
             <!-- Action Plan Input -->
-            <div class="bg-indigo-50 border border-indigo-100 p-5 rounded-3xl space-y-3 w-full box-border">
+            <div class="bg-indigo-50 border border-indigo-100 p-5 rounded-3xl space-y-3 w-full">
                 <h3 class="font-bold text-base text-indigo-900 flex items-center space-x-2">
                     <i class="fa-solid fa-pen-to-square text-indigo-600"></i>
                     <span>今後のアクションメモ</span>
                 </h3>
-                <textarea id="action-plan-memo" rows="3" class="w-full text-sm p-3 rounded-2xl border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white box-border" placeholder="例: 今週末に今後のキャリアについて整理する時間を作る..."></textarea>
+                <textarea id="action-plan-memo" rows="3" class="w-full text-sm p-3 rounded-2xl border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white" placeholder="例: 今週末に今後のキャリアについて整理する時間を作る..."></textarea>
                 <button onclick="saveCurrentResult()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-2xl text-sm shadow-md shadow-indigo-200 transition flex items-center justify-center space-x-2 active:scale-95">
                     <i class="fa-solid fa-floppy-disk"></i>
                     <span>診断結果とメモを保存する</span>
@@ -316,7 +315,7 @@
     </div>
 
     <script>
-        // 20 Standard Items with Matching Visual Icons & Colors
+        // 20 Standard Items
         const DIAGNOSIS_ITEMS = [
             { id: 1, category: "家族・人間関係", title: "パートナーシップ", desc: "配偶者やパートナーとの信頼・深い絆", icon: "fa-heart", iconBg: "bg-rose-100", iconColor: "text-rose-600", borderColor: "border-rose-200" },
             { id: 2, category: "家族・人間関係", title: "家族・子供", desc: "子供の成長支援や親・親族との良好な関係", icon: "fa-people-roof", iconBg: "bg-orange-100", iconColor: "text-orange-600", borderColor: "border-orange-200" },
@@ -598,10 +597,10 @@
                 const tr = document.createElement('tr');
                 tr.className = index === 0 ? "bg-indigo-50/50 font-bold" : "hover:bg-slate-50";
                 tr.innerHTML = `
-                    <td class="py-2.5 px-1 text-center text-slate-400 font-bold">${index + 1}</td>
+                    <td class="py-2.5 px-2 text-center text-slate-400 font-bold">${index + 1}</td>
                     <td class="py-2.5 px-2 text-slate-800 whitespace-nowrap">${cat.name}</td>
-                    <td class="py-2.5 px-1 text-right text-indigo-600 font-extrabold whitespace-nowrap">${cat.avgImportance} <span class="text-[10px] font-normal text-slate-400">/10</span></td>
-                    <td class="py-2.5 px-1 text-right text-slate-700 font-bold whitespace-nowrap">${cat.sharePercent}%</td>
+                    <td class="py-2.5 px-2 text-right text-indigo-600 font-extrabold whitespace-nowrap">${cat.avgImportance} <span class="text-[10px] font-normal text-slate-400">/10</span></td>
+                    <td class="py-2.5 px-2 text-right text-slate-700 font-bold whitespace-nowrap">${cat.sharePercent}%</td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -612,7 +611,7 @@
 
             results.topGapItems.forEach(item => {
                 const card = document.createElement('div');
-                card.className = "p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 w-full box-border";
+                card.className = "p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 w-full";
                 card.innerHTML = `
                     <div class="flex justify-between items-start">
                         <div>
