@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>人生目的ポートフォリオ診断2</title>
+    <title>人生目的ポートフォリオ診断</title>
     
     <!-- PWA & Mobile Web App Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -92,7 +92,7 @@
                 </div>
                 <h2 class="text-xl font-extrabold text-slate-900">あなたの「人生の目的」を<br>可視化しましょう</h2>
                 <p class="text-sm text-slate-700 leading-relaxed font-medium">
-                    バイアスを防ぐため全20項目をランダムな順序で出題！「重要度」と「現在の満足度」を診断し、構成比とギャップを分析します。
+                    バイアスを防ぐため全20項目をランダムな順序で出題。「重要度」と「現在の満足度」を診断し、構成比とギャップを分析します。
                 </p>
                 <div class="pt-2">
                     <button onclick="startDiagnosis()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 px-6 rounded-2xl shadow-lg shadow-indigo-200 active:scale-95 transition text-base flex items-center justify-center space-x-2">
