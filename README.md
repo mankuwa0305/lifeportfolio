@@ -88,7 +88,7 @@
     <main class="flex-1 max-w-md w-full mx-auto p-4 pb-20 box-border overflow-x-hidden flex flex-col items-center justify-start">
 
         <!-- STEP 1: Welcome & Intro View -->
-        <section id="view-intro" class="space-y-6 text-center py-4 w-full">
+        <section id="view-intro" class="space-y-6 text-center py-4 w-full max-w-md mx-auto">
             <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-200 space-y-4">
                 <div class="w-20 h-20 bg-indigo-100 rounded-3xl flex items-center justify-center mx-auto text-indigo-600 text-4xl shadow-inner">
                     <i class="fa-solid fa-bullseye"></i>
@@ -107,7 +107,7 @@
         </section>
 
         <!-- STEP 2: Questionnaire Wizard View -->
-        <section id="view-wizard" class="hidden space-y-4 w-full">
+        <section id="view-wizard" class="hidden space-y-4 w-full max-w-md mx-auto">
             <!-- Progress Bar -->
             <div class="bg-white px-4 py-3 rounded-2xl shadow-sm border border-slate-200 space-y-2">
                 <div class="flex justify-between items-center text-sm font-bold text-slate-700">
@@ -187,11 +187,11 @@
             </div>
         </section>
 
-        <!-- STEP 3: Results View (完全中央揃え配置) -->
-        <section id="view-result" class="hidden space-y-6 w-full max-w-md mx-auto box-border overflow-x-hidden text-left">
+        <!-- STEP 3: Results View (画面全体で中央揃えを行うようFlex指定) -->
+        <section id="view-result" class="hidden space-y-6 w-full max-w-md mx-auto box-border overflow-x-hidden">
             
             <!-- Result Title Header & Top Action Bar -->
-            <div class="bg-gradient-to-r from-indigo-700 to-indigo-900 text-white p-5 rounded-3xl shadow-lg space-y-2 relative w-full box-border">
+            <div class="bg-gradient-to-r from-indigo-700 to-indigo-900 text-white p-5 rounded-3xl shadow-lg space-y-2 relative w-full max-w-md mx-auto box-border">
                 <div class="flex justify-between items-start">
                     <div>
                         <div class="text-[11px] opacity-90 uppercase tracking-widest font-extrabold">Diagnosis Result</div>
@@ -207,12 +207,12 @@
             </div>
 
             <!-- TOP TYPE COMMENT SECTION -->
-            <div id="top-type-card" class="bg-amber-50 border-2 border-amber-300 p-5 rounded-3xl space-y-3 shadow-sm w-full box-border">
+            <div id="top-type-card" class="bg-amber-50 border-2 border-amber-300 p-5 rounded-3xl space-y-3 shadow-sm w-full max-w-md mx-auto box-border">
                 <!-- JS Dynamic Inject -->
             </div>
 
             <!-- Ranking Table: Share & Average Importance -->
-            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200 space-y-4 w-full box-border overflow-hidden">
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200 space-y-4 w-full max-w-md mx-auto box-border overflow-hidden">
                 <h3 class="font-extrabold text-base text-slate-900 flex items-center space-x-2">
                     <i class="fa-solid fa-list-ol text-indigo-600"></i>
                     <span>人生目的のシェア（重要度順位）</span>
@@ -224,7 +224,7 @@
                 </div>
 
                 <!-- Ranking Table -->
-                <div class="w-full">
+                <div class="w-full overflow-x-auto">
                     <table class="w-full text-left text-sm mx-auto">
                         <thead>
                             <tr class="border-b-2 border-slate-200 text-slate-700 font-extrabold text-xs">
@@ -242,7 +242,7 @@
             </div>
 
             <!-- Radar Chart: Importance vs Satisfaction -->
-            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 space-y-3 w-full box-border">
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 space-y-3 w-full max-w-md mx-auto box-border">
                 <h3 class="font-bold text-base text-slate-800 flex items-center space-x-2">
                     <i class="fa-solid fa-chart-radar text-indigo-500"></i>
                     <span>重要度 vs 満足度バランス</span>
@@ -253,7 +253,7 @@
             </div>
 
             <!-- Priority Top 3 Gaps -->
-            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 space-y-4 w-full box-border">
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 space-y-4 w-full max-w-md mx-auto box-border">
                 <div>
                     <h3 class="font-bold text-base text-slate-800 flex items-center space-x-2">
                         <i class="fa-solid fa-triangle-exclamation text-rose-500"></i>
@@ -268,7 +268,7 @@
             </div>
 
             <!-- Action Plan Input -->
-            <div class="bg-indigo-50 border border-indigo-100 p-5 rounded-3xl space-y-3 w-full box-border">
+            <div class="bg-indigo-50 border border-indigo-100 p-5 rounded-3xl space-y-3 w-full max-w-md mx-auto box-border">
                 <h3 class="font-bold text-base text-indigo-900 flex items-center space-x-2">
                     <i class="fa-solid fa-pen-to-square text-indigo-600"></i>
                     <span>今後のアクションメモ</span>
@@ -281,7 +281,7 @@
             </div>
 
             <!-- Restart Button -->
-            <div class="pt-2 w-full">
+            <div class="pt-2 w-full max-w-md mx-auto">
                 <button onclick="restartDiagnosis()" class="w-full bg-white hover:bg-slate-50 text-slate-600 font-bold py-3.5 border border-slate-200 rounded-2xl text-sm transition">
                     再診断を行う
                 </button>
@@ -421,8 +421,15 @@
 
             document.getElementById('app-header').classList.remove('hidden');
             document.getElementById('view-intro').classList.add('hidden');
-            document.getElementById('view-wizard').classList.remove('hidden');
-            document.getElementById('view-result').classList.add('hidden');
+            
+            const wizardView = document.getElementById('view-wizard');
+            wizardView.classList.remove('hidden');
+            wizardView.classList.add('flex', 'flex-col', 'items-center');
+
+            const resultView = document.getElementById('view-result');
+            resultView.classList.add('hidden');
+            resultView.classList.remove('flex', 'flex-col', 'items-center');
+
             currentIndex = 0;
             renderQuestion();
         }
@@ -544,10 +551,16 @@
         }
 
         function showResults() {
-            // 結果画面に遷移した後は上部ヘッダーバナーを非表示にする
+            // 結果画面遷移時にヘッダーを隠し、中央寄せFlexレイアウトを確実に適用
             document.getElementById('app-header').classList.add('hidden');
-            document.getElementById('view-wizard').classList.add('hidden');
-            document.getElementById('view-result').classList.remove('hidden');
+            
+            const wizardView = document.getElementById('view-wizard');
+            wizardView.classList.add('hidden');
+            wizardView.classList.remove('flex', 'flex-col', 'items-center');
+
+            const resultView = document.getElementById('view-result');
+            resultView.classList.remove('hidden');
+            resultView.classList.add('flex', 'flex-col', 'items-center');
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
