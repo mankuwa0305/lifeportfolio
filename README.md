@@ -36,7 +36,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* Touch friendly slider customizations - 押しやすい大きなツマミ */
+        /* Touch friendly slider customizations */
         input[type=range] {
             -webkit-appearance: none;
             width: 100%;
@@ -61,16 +61,17 @@
             background: #cbd5e1;
             border-radius: 5px;
         }
-        body {
+        html, body {
+            overflow-x: hidden;
             overscroll-behavior-y: none;
             -webkit-tap-highlight-color: transparent;
         }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-900 font-sans min-h-screen flex flex-col antialiased select-none">
+<body class="bg-slate-100 text-slate-900 font-sans min-h-screen flex flex-col antialiased select-none overflow-x-hidden">
 
-    <!-- Header / App Bar (スリム＆小さめのタイトルに変更) -->
-    <header class="bg-indigo-700 text-white sticky top-0 z-50 shadow-sm py-1.5 px-4">
+    <!-- Header / App Bar (結果画面ではJSにより非表示になります) -->
+    <header id="app-header" class="bg-indigo-700 text-white sticky top-0 z-50 shadow-sm py-1.5 px-4 w-full">
         <div class="max-w-md mx-auto flex items-center justify-between">
             <div class="flex items-center space-x-1.5">
                 <i class="fa-solid fa-compass text-amber-300 text-sm"></i>
@@ -83,11 +84,11 @@
         </div>
     </header>
 
-    <!-- Main Content Container -->
-    <main class="flex-1 max-w-md w-full mx-auto p-4 pb-20">
+    <!-- Main Content Container (右ズレ防止のため box-border と px-4 を最適化) -->
+    <main class="flex-1 max-w-md w-full mx-auto p-4 pb-20 box-border overflow-x-hidden">
 
         <!-- STEP 1: Welcome & Intro View -->
-        <section id="view-intro" class="space-y-6 text-center py-4">
+        <section id="view-intro" class="space-y-6 text-center py-4 w-full">
             <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-200 space-y-4">
                 <div class="w-20 h-20 bg-indigo-100 rounded-3xl flex items-center justify-center mx-auto text-indigo-600 text-4xl shadow-inner">
                     <i class="fa-solid fa-bullseye"></i>
@@ -105,8 +106,8 @@
             </div>
         </section>
 
-        <!-- STEP 2: Questionnaire Wizard View (見やすく・操作しやすく改修) -->
-        <section id="view-wizard" class="hidden space-y-4">
+        <!-- STEP 2: Questionnaire Wizard View -->
+        <section id="view-wizard" class="hidden space-y-4 w-full">
             <!-- Progress Bar -->
             <div class="bg-white px-4 py-3 rounded-2xl shadow-sm border border-slate-200 space-y-2">
                 <div class="flex justify-between items-center text-sm font-bold text-slate-700">
@@ -133,9 +134,7 @@
                     </div>
 
                     <div class="space-y-1">
-                        <!-- タイトルを大きくして視認性をアップ -->
                         <h3 id="item-title" class="text-2xl font-black text-slate-900 tracking-tight">項目タイトル</h3>
-                        <!-- 説明文も見やすく調整 -->
                         <p id="item-desc" class="text-sm text-slate-600 font-bold leading-snug px-2">項目の補足説明</p>
                     </div>
                 </div>
@@ -175,7 +174,7 @@
                 </div>
             </div>
 
-            <!-- Controls (大きな押しやすいボタンに変更) -->
+            <!-- Controls -->
             <div class="flex items-center justify-between gap-3 pt-1">
                 <button id="btn-prev" onclick="prevQuestion()" class="flex-1 bg-white hover:bg-slate-100 border-2 border-slate-300 text-slate-800 font-extrabold py-4 px-4 rounded-2xl text-base transition flex items-center justify-center space-x-1 shadow-sm active:scale-95">
                     <i class="fa-solid fa-chevron-left text-sm"></i>
@@ -188,23 +187,32 @@
             </div>
         </section>
 
-        <!-- STEP 3: Results View -->
-        <section id="view-result" class="hidden space-y-6">
+        <!-- STEP 3: Results View (ヘッダーなしでも履歴を確認できるよう内部にボタン配置) -->
+        <section id="view-result" class="hidden space-y-6 w-full box-border overflow-x-hidden">
             
-            <!-- Result Title Header -->
-            <div class="bg-gradient-to-r from-indigo-700 to-indigo-900 text-white p-5 rounded-3xl shadow-lg space-y-1">
-                <div class="text-[11px] opacity-90 uppercase tracking-widest font-extrabold">Diagnosis Result</div>
-                <h2 class="text-xl font-black">人生目的ポートフォリオ分析</h2>
+            <!-- Result Title Header & Top Action Bar -->
+            <div class="bg-gradient-to-r from-indigo-700 to-indigo-900 text-white p-5 rounded-3xl shadow-lg space-y-2 relative">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <div class="text-[11px] opacity-90 uppercase tracking-widest font-extrabold">Diagnosis Result</div>
+                        <h2 class="text-xl font-black mt-0.5">人生目的ポートフォリオ分析</h2>
+                    </div>
+                    <!-- 履歴ボタンを結果画面内にも設置 -->
+                    <button onclick="toggleHistoryModal()" class="text-[11px] bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-full flex items-center space-x-1.5 border border-white/30 text-white font-bold backdrop-blur-xs">
+                        <i class="fa-solid fa-clock-rotate-left text-[10px]"></i>
+                        <span>履歴</span>
+                    </button>
+                </div>
                 <p class="text-xs text-indigo-100 font-medium">あなたの意識の重きと現状のバランス結果です。</p>
             </div>
 
             <!-- TOP TYPE COMMENT SECTION -->
-            <div id="top-type-card" class="bg-amber-50 border-2 border-amber-300 p-5 rounded-3xl space-y-3 shadow-sm">
+            <div id="top-type-card" class="bg-amber-50 border-2 border-amber-300 p-5 rounded-3xl space-y-3 shadow-sm w-full box-border">
                 <!-- JS Dynamic Inject -->
             </div>
 
             <!-- Ranking Table: Share & Average Importance -->
-            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200 space-y-4">
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200 space-y-4 w-full box-border overflow-hidden">
                 <h3 class="font-extrabold text-base text-slate-900 flex items-center space-x-2">
                     <i class="fa-solid fa-list-ol text-indigo-600"></i>
                     <span>人生目的のシェア（重要度順位）</span>
@@ -216,14 +224,14 @@
                 </div>
 
                 <!-- Ranking Table -->
-                <div class="overflow-x-auto">
+                <div class="w-full overflow-x-auto">
                     <table class="w-full text-left text-sm">
                         <thead>
                             <tr class="border-b-2 border-slate-200 text-slate-700 font-extrabold text-xs">
-                                <th class="py-2.5 px-1 text-center">順位</th>
-                                <th class="py-2.5 px-2">カテゴリー</th>
-                                <th class="py-2.5 px-1 text-right">平均重要度</th>
-                                <th class="py-2.5 px-1 text-right">シェア</th>
+                                <th class="py-2.5 px-1 text-center whitespace-nowrap">順位</th>
+                                <th class="py-2.5 px-2 whitespace-nowrap">カテゴリー</th>
+                                <th class="py-2.5 px-1 text-right whitespace-nowrap">平均重要度</th>
+                                <th class="py-2.5 px-1 text-right whitespace-nowrap">シェア</th>
                             </tr>
                         </thead>
                         <tbody id="ranking-table-body" class="divide-y divide-slate-200">
@@ -234,18 +242,18 @@
             </div>
 
             <!-- Radar Chart: Importance vs Satisfaction -->
-            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 space-y-3">
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 space-y-3 w-full box-border">
                 <h3 class="font-bold text-base text-slate-800 flex items-center space-x-2">
                     <i class="fa-solid fa-chart-radar text-indigo-500"></i>
                     <span>重要度 vs 満足度バランス</span>
                 </h3>
-                <div class="relative aspect-square w-full">
+                <div class="relative aspect-square w-full max-w-xs mx-auto">
                     <canvas id="radarChart"></canvas>
                 </div>
             </div>
 
             <!-- Priority Top 3 Gaps -->
-            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 space-y-4">
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 space-y-4 w-full box-border">
                 <div>
                     <h3 class="font-bold text-base text-slate-800 flex items-center space-x-2">
                         <i class="fa-solid fa-triangle-exclamation text-rose-500"></i>
@@ -254,18 +262,18 @@
                     <p class="text-xs text-slate-500 mt-1 font-medium">「重要度が高く満足度が低い」ギャップの大きい具体項目です。</p>
                 </div>
 
-                <div id="gap-items-container" class="space-y-3">
+                <div id="gap-items-container" class="space-y-3 w-full">
                     <!-- JS Dynamic Inject -->
                 </div>
             </div>
 
             <!-- Action Plan Input -->
-            <div class="bg-indigo-50 border border-indigo-100 p-5 rounded-3xl space-y-3">
+            <div class="bg-indigo-50 border border-indigo-100 p-5 rounded-3xl space-y-3 w-full box-border">
                 <h3 class="font-bold text-base text-indigo-900 flex items-center space-x-2">
                     <i class="fa-solid fa-pen-to-square text-indigo-600"></i>
                     <span>今後のアクションメモ</span>
                 </h3>
-                <textarea id="action-plan-memo" rows="3" class="w-full text-sm p-3 rounded-2xl border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white" placeholder="例: 今週末に今後のキャリアについて整理する時間を作る..."></textarea>
+                <textarea id="action-plan-memo" rows="3" class="w-full text-sm p-3 rounded-2xl border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white box-border" placeholder="例: 今週末に今後のキャリアについて整理する時間を作る..."></textarea>
                 <button onclick="saveCurrentResult()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-2xl text-sm shadow-md shadow-indigo-200 transition flex items-center justify-center space-x-2 active:scale-95">
                     <i class="fa-solid fa-floppy-disk"></i>
                     <span>診断結果とメモを保存する</span>
@@ -273,7 +281,7 @@
             </div>
 
             <!-- Restart Button -->
-            <div class="pt-2">
+            <div class="pt-2 w-full">
                 <button onclick="restartDiagnosis()" class="w-full bg-white hover:bg-slate-50 text-slate-600 font-bold py-3.5 border border-slate-200 rounded-2xl text-sm transition">
                     再診断を行う
                 </button>
@@ -411,6 +419,7 @@
         function startDiagnosis() {
             shuffledItems = shuffleArray(DIAGNOSIS_ITEMS);
 
+            document.getElementById('app-header').classList.remove('hidden');
             document.getElementById('view-intro').classList.add('hidden');
             document.getElementById('view-wizard').classList.remove('hidden');
             document.getElementById('view-result').classList.add('hidden');
@@ -535,8 +544,12 @@
         }
 
         function showResults() {
+            // 結果画面に遷移した後は上部ヘッダーバナーを非表示にする
+            document.getElementById('app-header').classList.add('hidden');
             document.getElementById('view-wizard').classList.add('hidden');
             document.getElementById('view-result').classList.remove('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
 
             const results = calculateResults();
             const sortedCats = results.sortedCategories;
@@ -574,9 +587,9 @@
                 tr.className = index === 0 ? "bg-indigo-50/50 font-bold" : "hover:bg-slate-50";
                 tr.innerHTML = `
                     <td class="py-2.5 px-1 text-center text-slate-400 font-bold">${index + 1}</td>
-                    <td class="py-2.5 px-2 text-slate-800">${cat.name}</td>
-                    <td class="py-2.5 px-1 text-right text-indigo-600 font-extrabold">${cat.avgImportance} <span class="text-[10px] font-normal text-slate-400">/10</span></td>
-                    <td class="py-2.5 px-1 text-right text-slate-700 font-bold">${cat.sharePercent}%</td>
+                    <td class="py-2.5 px-2 text-slate-800 whitespace-nowrap">${cat.name}</td>
+                    <td class="py-2.5 px-1 text-right text-indigo-600 font-extrabold whitespace-nowrap">${cat.avgImportance} <span class="text-[10px] font-normal text-slate-400">/10</span></td>
+                    <td class="py-2.5 px-1 text-right text-slate-700 font-bold whitespace-nowrap">${cat.sharePercent}%</td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -587,14 +600,14 @@
 
             results.topGapItems.forEach(item => {
                 const card = document.createElement('div');
-                card.className = "p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2";
+                card.className = "p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 w-full box-border";
                 card.innerHTML = `
                     <div class="flex justify-between items-start">
                         <div>
                             <span class="text-[10px] font-bold text-slate-500 bg-slate-200/60 px-2 py-0.5 rounded-md">${item.category}</span>
                             <h4 class="font-bold text-sm text-slate-800 mt-1">${item.title}</h4>
                         </div>
-                        <span class="text-xs font-bold text-rose-500 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-lg">
+                        <span class="text-xs font-bold text-rose-500 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-lg whitespace-nowrap">
                             ギャップ +${item.gap}
                         </span>
                     </div>
