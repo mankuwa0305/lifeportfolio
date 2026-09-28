@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>人生目的ポートフォリオ診断</title>
+    <title>人生目的ポートフォリオ診断2</title>
     
     <!-- PWA & Mobile Web App Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
